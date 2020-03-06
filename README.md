@@ -15,7 +15,7 @@ You can install the library via Composer. Add this to your composer.json:
 ```javascript
 {
     "require": {
-        "paddle/php-api": "1.*"
+        "rozmarbeka/php-api": "1.*"
     }
 }
 ```
