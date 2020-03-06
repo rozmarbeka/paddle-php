@@ -1,5 +1,5 @@
 {
-	"name": "rozmarbeka/php-api",
+	"name": "rozmarbeka/paddle-php-api",
 	"type": "library",
 	"description": "Paddle.com API PHP library",
 	"homepage": "https://github.com/PaddleHQ/paddle-php",
