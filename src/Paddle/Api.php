@@ -279,7 +279,10 @@ class Api
         if (isset($optional_arguments['webhook_url'])) {
             throw new \InvalidArgumentException(self::ERR_314, 314);
         }
+
+        $data = array_merge($optional_arguments, $data);
         $response = $this->http_call('/product/generate_pay_link', 'POST', $data);
+        
         return $response['url'];
     }
 
@@ -308,6 +311,7 @@ class Api
         $data['title'] = Filters::filter_title($title);
         if (isset($optional_arguments['currency'])) {
             $data['prices'] = [sprintf('%s:%s', $optional_arguments['currency'], Filters::filter_price($price))];
+            unset($optional_arguments['currency']);
         } else {
             $data['price'] = Filters::filter_price($price);
         }
@@ -316,6 +320,9 @@ class Api
         }
         $data['image_url'] = Filters::filter_image_url($image_url);
         $data['webhook_url'] = Filters::filter_webhook_url($webhook_url);
+        if (isset($optional_arguments['customer_email'])) {
+            $data['customer_email'] = Filters::filter_email($optional_arguments['customer_email']);
+        }
         if (isset($optional_arguments['passthrough'])) {
             $data['passthrough'] = $optional_arguments['passthrough'];
         }
@@ -358,7 +365,10 @@ class Api
         if (isset($optional_arguments['product_id'])) {
             throw new \InvalidArgumentException(self::ERR_318, 318);
         }
+
+        $data = array_merge($optional_arguments, $data);
         $response = $this->http_call('/product/generate_pay_link', 'POST', $data);
+
         return $response['url'];
     }
 
