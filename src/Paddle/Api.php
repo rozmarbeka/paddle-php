@@ -2,6 +2,8 @@
 
 namespace Paddle;
 
+use Paddle\Response\OneTimeChargeResponse;
+
 /**
  * Paddle.com API PHP wrapper
  * @author Paddle.com
@@ -165,23 +167,6 @@ class Api
         }
 
         return $arr_api_response['response'];
-    }
-
-    /**
-     * @param int $subscription_id
-     * @param float $amount
-     * @param string $charge_name
-     * @return array
-     * @throws \Exception
-     */
-    public function one_time_charge($subscription_id, $amount, $charge_name)
-    {
-        $data = array();
-        $data['amount'] = Filters::filter_price($amount);
-        $data['charge_name'] = Filters::filter_title($charge_name);
-
-        return $this->http_call(sprintf('/product/subscription/%d/charge', $subscription_id), 'POST', $data);
-
     }
 
     /**
@@ -370,6 +355,23 @@ class Api
         $response = $this->http_call('/product/generate_pay_link', 'POST', $data);
 
         return $response['url'];
+    }
+
+    /**
+     * @param int $subscription_id
+     * @param float $amount
+     * @param string $charge_name
+     * @return OneTimeChargeResponse
+     * @throws \Exception
+     */
+    public function one_time_charge($subscription_id, $amount, $charge_name)
+    {
+        $data = array();
+        $data['amount'] = Filters::filter_price($amount);
+        $data['charge_name'] = Filters::filter_title($charge_name);
+        $response = $this->http_call(sprintf('/subscription/%d/charge', $subscription_id), 'POST', $data);
+
+        return new OneTimeChargeResponse($response);
     }
 
     /**
