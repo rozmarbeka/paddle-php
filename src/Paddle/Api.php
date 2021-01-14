@@ -19,6 +19,8 @@ class Api
     protected $base_url;
     protected $api_version = '2.0';
 
+    const ERROR_CODE_ONE_TIME_CHARGE_LIMIT_REACHED = 189;
+
     /*
      * 1XX - API response errors
      */
