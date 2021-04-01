@@ -35,7 +35,7 @@ class OneTimeChargeResponse
     {
         foreach ($data as $field => $value) {
             if (!property_exists($this, $field)) {
-                $errors[]  = sprintf('"%s" field does not exists in Paddle one-time charge response data.', $field);
+                $this->errors[]  = sprintf('"%s" field does not exists in Paddle one-time charge response data.', $field);
 
                 continue;
             }
