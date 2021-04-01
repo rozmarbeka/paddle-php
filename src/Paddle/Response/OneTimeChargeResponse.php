@@ -25,12 +25,19 @@ class OneTimeChargeResponse
     /** @var string */
     public $order_id;
 
+    /** @var string */
+    public $status;
+
+    /** @var array */
+    public $errors = [];
+
     public function __construct($data)
     {
         foreach ($data as $field => $value) {
             if (!property_exists($this, $field)) {
+                $errors[]  = sprintf('"%s" field does not exists in Paddle one-time charge response data.', $field);
 
-                throw new \Exception(sprintf('"%s" field does not exists in Paddle one-time charge response data.', $field));
+                continue;
             }
 
             $this->$field = $value;
